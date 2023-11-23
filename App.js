@@ -10,12 +10,15 @@ export default function App() {
 
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
+  const [nextSerialNumber, setnextSerialNumber] = useState(1);
 
   // add task
   const handleAddText = () => {
     Keyboard.dismiss();
-    setTaskItems([...taskItems, task]);
+    const newTask = { serialNumber: nextSerialNumber, text: task }
+    setTaskItems([...taskItems, newTask]);
     setTask(null);
+    setnextSerialNumber(nextSerialNumber + 1);
   }
 
   // Delete task
@@ -48,7 +51,7 @@ export default function App() {
             taskItems.map((item, index) => {
               return (
                 <TouchableOpacity key={index} onPress={() => completeTask(index)}>
-                  <Task text={`${index + 1}- ${item}`} />
+                  <Task text={`${item.serialNumber}- ${item.text}`} />
                 </TouchableOpacity>
               )
             })
